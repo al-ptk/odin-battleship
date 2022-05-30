@@ -1,7 +1,6 @@
+import { range } from './zonks.js';
+
 /** Ship factory:
- * _length
- * _orientation
- * _startingIndex
  * _unitState = Array (_length).fill ([index, state]) or smthg
  * getLength () => _length << query
  * hit () << update \\ switch state
@@ -15,8 +14,9 @@ export default function shipFactory(origin, orientation, length) {
    * Length: how far the ship spans from the origin
    */
 
-
-  const _segments = Object.fromEntries(Array);
+  const _segments = Object.fromEntries(
+    range(origin, length).map((elem) => [elem, 'a'])
+  );
 
   function getBoundaries() {
     return Object.keys(_segments);
