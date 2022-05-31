@@ -1,3 +1,5 @@
+import { range } from './zonks.js';
+
 export default function gameBoardFactory(widthLen) {
   // Gameboard factory
   // _edgeLength = int
@@ -19,12 +21,35 @@ export default function gameBoardFactory(widthLen) {
     return _markedCells;
   }
 
-  function receiveAttack (index) {
+  function receiveAttack(index) {
     _markedCells.push(index.toString());
+  }
+
+  function _horizontValid(range) {
+    return range.reduce(
+      (curr, next) => Math.trunc(parseInt(curr) / 10) === Math.trunc(next) / 10
+    );
+  }
+
+  function _verticalValid(range) {
+    return range.reduce(
+      (curr, next) => parseInt(curr) % widthLen === parseInt(next) % widthLen
+    );
+  }
+
+  function placeShip(origin, orientation, shipLen) {
+    const shipSpan = range(origin, shipLen, orientation * widthLen);
+    const valid = orientation
+      ? _horizontValid(shipSpan)
+      : _horizontValid(shipSpan);
+    if (!valid) return false;
+    // Vertical: all modulos must remain the same
+    // Horizontal: all positions with divisions by width return equal index division by width
   }
 
   return {
     getMarkedCells,
-    receiveAttack
+    receiveAttack,
+    placeShip,
   };
 }
