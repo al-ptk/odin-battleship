@@ -29,12 +29,15 @@ export default function shipFactory(
   }
 
   function isSunk() {
-    return Object.values(_segments).reduce((current, next) => (next === "hit") && current, true)
+    return Object.values(_segments).reduce(
+      (current, next) => next === 'hit' && current,
+      true
+    );
   }
 
   return {
     getBoundaries,
     hit,
-    isSunk
+    isSunk,
   };
 }
