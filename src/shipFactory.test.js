@@ -1,15 +1,13 @@
 import shipFactory from './shipFactory';
 
-const ship = shipFactory(6, false, 3);
-
 describe('Testing the ship object interface', () => {
-  test('Does ship return the length it was constructed as?', () => {
-    expect(ship.getBoundaries()).toStrictEqual(
-      Object.keys({ 6: 'a', 7: 'a', 8: 'a' })
-    );
+  test('Ship initializes with horizontal direction correctly', () => {
+    const horShip = shipFactory(6, false, 3, 10);
+    expect(horShip.getBoundaries()).toStrictEqual(['6', '7', '8']);
   });
 
-  // test('Is the ship, of length 3, hit in the middle?', () => {
-  //   expect(ship.hit(1)).toBeTruthy();
-  // });
+  test('Ship initializes with vertical direction correctly', () => {
+    const verShip = shipFactory(6, true, 3, 10);
+    expect(verShip.getBoundaries()).toStrictEqual(['6', '16', '26']);
+  });
 });
