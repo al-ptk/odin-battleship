@@ -2,21 +2,8 @@ import { range } from './zonks.js';
 import shipFactory from './shipFactory.js';
 
 export default function gameBoardFactory(widthLen) {
-  // Gameboard factory
-  // _edgeLength = int
-  //
-  // _board = Array (_edgeLength ** 2). fill (cell)
-  // // cell is 3+1 states: unknown, hit, miss
-  // // Plus  placed-ship for the player's own board.
-  //
-  // placeShip (index) {       // vvv Single obj? Two ints? Array pair? vvv
-  //   is ship fall out of boundaries?
-  // } << update
-  //
-  // receiveAttack (index) => hit\miss << query
-  // allShipsDown () => true\false << query
-  // const _containedShips = Array(5).fill(shipFactory())
   const _markedCells = [];
+  const _allShips = [];
   const _shipIndexes = {};
 
   function getMarkedCells() {
@@ -56,6 +43,7 @@ export default function gameBoardFactory(widthLen) {
       _shipIndexes,
       Object.fromEntries(ship.getBoundaries().map((idx) => [idx, ship]))
     );
+    _allShips.push(ship);
     return true;
   }
 
@@ -68,12 +56,14 @@ export default function gameBoardFactory(widthLen) {
     return _appendShip(origin, orientation, shipLen);
   }
 
+  function allShipsSunk() {
+    return _allShips.reduce((curr, next) => next.isSunk() && curr, true);
+  }
+
   return {
     getMarkedCells,
     receiveAttack,
     placeShip,
-    debug: {
-      _appendShip,
-    },
+    allShipsSunk,
   };
 }

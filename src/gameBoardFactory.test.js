@@ -50,8 +50,10 @@ describe('Testing the gameBoard object', () => {
     expect(board.receiveAttack('14')).toBeTruthy();
   });
 
-  // test('Attack missed avoids ship', () => {
-  //   expect(board.receiveAttack('13')).not.toBeUndefined();
-  //   expect(board.receiveAttack('13')).toBeFalsy();
-  // })
+  test('Board recognizes if all ships have sunk', () => {
+    ['4', '14', '24', '7', '17', '27'].forEach((idx) => {
+      board.receiveAttack(idx);
+    });
+    expect(board.allShipsSunk()).toBeTruthy();
+  });
 });
