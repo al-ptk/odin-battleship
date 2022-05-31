@@ -10,11 +10,20 @@ export default function playerFactory(boardLen) {
     try {
       _board.placeShip(index, orientation, size);
     } catch (err) {
-      throw err
+      throw err;
     }
+  }
+
+  function receiveAttack(index) {
+    const truthy = _board.receiveAttack(index);
+    for (const ship of _board.debug.peekAtShips()) {
+      console.log(ship.getBoundaries());
+    }
+    return truthy ? 'hit' : 'miss';
   }
 
   return {
     deployShip,
+    receiveAttack,
   };
 }

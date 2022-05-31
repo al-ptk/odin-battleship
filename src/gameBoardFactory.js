@@ -11,7 +11,8 @@ export default function gameBoardFactory(widthLen) {
   }
 
   function receiveAttack(index) {
-    _markedCells.push(index.toString());
+    index = index.toString();
+    _markedCells.push(index);
     const shipExists = Object.keys(_shipIndexes).includes(index);
     return shipExists ? _shipIndexes[index].hit(index) : false;
   }
@@ -25,7 +26,10 @@ export default function gameBoardFactory(widthLen) {
   }
 
   function _verticalValid(range) {
-    return range.reduce((curr, next) => Math.trunc(next / widthLen) < widthLen && curr, true);
+    return range.reduce(
+      (curr, next) => Math.trunc(next / widthLen) < widthLen && curr,
+      true
+    );
   }
 
   function _spotTaken(range) {
@@ -66,10 +70,17 @@ export default function gameBoardFactory(widthLen) {
     return _allShips.reduce((curr, next) => next.isSunk() && curr, true);
   }
 
+  function _peekAtShips() {
+    return _allShips;
+  }
+
   return {
     getMarkedCells,
     receiveAttack,
     placeShip,
     allShipsSunk,
+    debug: {
+      _peekAtShips,
+    },
   };
 }
