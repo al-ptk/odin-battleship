@@ -29,7 +29,13 @@ export default function shipFactory(
     return Object.keys(_segments);
   }
 
+  function hit (index) {
+    const gotten = Object.keys(_segments).includes(index.toString());
+    return gotten ? _segments[index.toString()] = 'hit' : false;
+  }
+
   return {
     getBoundaries,
+    hit,
   };
 }
