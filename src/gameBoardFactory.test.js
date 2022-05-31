@@ -14,19 +14,14 @@ describe('Testing the gameBoard object', () => {
   });
 
   test('Board fails to place ships from horizontal edge to out of bounds', () => {
-    const origin = 21;
-    const shipLen = 3;
-    const orientation = false;
-    expect(board.placeShip(origin, orientation, shipLen)).not.toBeUndefined();
-    expect(board.placeShip(origin, orientation, shipLen)).toBeFalsy();
+    expect(() => board.placeShip(9, false, 3)).toThrow('Invalid Position');
+    expect(() => board.placeShip(78, false, 3)).toThrow('Invalid Position');
+    expect(() => board.placeShip(99, false, 3)).toThrow('Invalid Position');
   });
 
   test('Board fails to place ships from vertical edge to out of bounds', () => {
-    const origin = 81;
-    const shipLen = 3;
-    const orientation = true;
-    expect(board.placeShip(origin, orientation, shipLen)).not.toBeUndefined();
-    expect(board.placeShip(origin, orientation, shipLen)).toBeFalsy();
+    expect(() => board.placeShip(90, true, 3)).toThrow('Invalid Position');
+    expect(() => board.placeShip(99, true, 3)).toThrow('Invalid Position');
   });
 
   test('Board suceeds to place ship within bounds', () => {
@@ -36,14 +31,9 @@ describe('Testing the gameBoard object', () => {
     expect(board.placeShip(origin, orientation, shipLen)).toBeTruthy();
   });
 
-  const origin = 4;
-  const shipLen = 3;
-  const orientation = true;
-  board.placeShip(origin, orientation, shipLen);
-
+  board.placeShip(4, true, 3);
   test('Board fails to place ship on top of ship', () => {
-    expect(board.placeShip(origin, orientation, shipLen)).toBeFalsy();
-    expect(board.placeShip(13, false, shipLen)).toBeFalsy();
+    expect(() => board.placeShip(4, true, 3)).toThrow('Spot Taken');
   });
 
   test('Attack on target hits ship', () => {

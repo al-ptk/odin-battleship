@@ -1,11 +1,14 @@
 import playerFactory from './playerFactory.js';
 
 describe('Testing the player object', () => {
-  const game = {boardLen: 10, shipNumbers: 5}
-  const player1 = playerFactory();
-  const player2 = playerFactory();
+  const boardLen = 10;
+  const player1 = playerFactory(boardLen);
 
-  test('Players can attack each other', () => {});
+  test('Player successfully deploys horizontal ship', () => {
+    expect(() => {
+      player1.deployShip(0, false, 5);
+    }).not.toThrowError();
+  });
 
-  test('allShipsSunk signal ends gameloop', () => {});
+
 });

@@ -17,16 +17,15 @@ export default function gameBoardFactory(widthLen) {
   }
 
   function _horizontalValid(range) {
+    const ln = Math.trunc(range[0] / widthLen);
     return range.reduce(
-      (curr, next) => Math.trunc(parseInt(curr) / 10) === Math.trunc(next) / 10
+      (curr, next) => Math.trunc(next / widthLen) === ln && curr,
+      true
     );
   }
 
   function _verticalValid(range) {
-    return range.reduce(
-      (curr, next) => Math.trunc(parseInt(next) / widthLen) < widthLen && curr,
-      true
-    );
+    return range.reduce((curr, next) => Math.trunc(next / widthLen) < widthLen && curr, true);
   }
 
   function _spotTaken(range) {
@@ -48,11 +47,18 @@ export default function gameBoardFactory(widthLen) {
   }
 
   function placeShip(origin, orientation, shipLen) {
+    if (
+      origin === undefined ||
+      orientation === undefined ||
+      shipLen === undefined
+    )
+      throw new Error('Invalid Input');
     const shipSpan = range(origin, shipLen, orientation * widthLen);
     const valid = orientation
       ? _verticalValid(shipSpan)
       : _horizontalValid(shipSpan);
-    if (!valid || _spotTaken(shipSpan)) return false;
+    if (!valid) throw new Error('Invalid Position');
+    if (_spotTaken(shipSpan)) throw new Error('Spot Taken');
     return _appendShip(origin, orientation, shipLen);
   }
 
