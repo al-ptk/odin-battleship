@@ -16,14 +16,16 @@ export default function playerFactory(boardLen) {
 
   function receiveAttack(index) {
     const truthy = _board.receiveAttack(index);
-    for (const ship of _board.debug.peekAtShips()) {
-      console.log(ship.getBoundaries());
-    }
     return truthy ? 'hit' : 'miss';
+  }
+
+  function allShipsSunk() {
+    return _board.allShipsSunk();
   }
 
   return {
     deployShip,
     receiveAttack,
+    allShipsSunk
   };
 }

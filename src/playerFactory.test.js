@@ -45,4 +45,9 @@ describe('Testing the player object', () => {
   test('Right shot hits ship', () => {
     expect(player2.receiveAttack(0)).toBe('hit');
   });
+
+  test('Get "all sunk" message properly', () => {
+    expect(player2.allShipsSunk()).toBeTruthy();
+  })
+
 });
