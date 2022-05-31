@@ -1,11 +1,5 @@
 import { range } from './zonks.js';
 
-/** Ship factory:
- * _unitState = Array (_length).fill ([index, state]) or smthg
- * hit () << update \\ switch state
- * isSunk () => true\false << query
- */
-
 export default function shipFactory(
   origin,
   orientation,
