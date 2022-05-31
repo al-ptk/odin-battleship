@@ -33,15 +33,25 @@ describe('Testing the gameBoard object', () => {
     const origin = 7;
     const shipLen = 3;
     const orientation = true;
-    expect(board.placeShip(origin, orientation, shipLen)).toBeTruthy();    
-  })
+    expect(board.placeShip(origin, orientation, shipLen)).toBeTruthy();
+  });
+
+  const origin = 4;
+  const shipLen = 3;
+  const orientation = true;
+  board.placeShip(origin, orientation, shipLen);
 
   test('Board fails to place ship on top of ship', () => {
-    const origin = 4;
-    const shipLen = 3;
-    const orientation = true;
-    board.placeShip(origin, orientation, shipLen);
     expect(board.placeShip(origin, orientation, shipLen)).toBeFalsy();
     expect(board.placeShip(13, false, shipLen)).toBeFalsy();
-  })
+  });
+
+  test('Attack on target hits ship', () => {
+    expect(board.receiveAttack('14')).toBeTruthy();
+  });
+
+  // test('Attack missed avoids ship', () => {
+  //   expect(board.receiveAttack('13')).not.toBeUndefined();
+  //   expect(board.receiveAttack('13')).toBeFalsy();
+  // })
 });

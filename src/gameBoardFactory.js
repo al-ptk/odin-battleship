@@ -1,4 +1,5 @@
 import { range } from './zonks.js';
+import shipFactory from './shipFactory.js';
 
 export default function gameBoardFactory(widthLen) {
   // Gameboard factory
@@ -16,7 +17,7 @@ export default function gameBoardFactory(widthLen) {
   // allShipsDown () => true\false << query
   // const _containedShips = Array(5).fill(shipFactory())
   const _markedCells = [];
-  const _shipLocations = [];
+  const _shipIndexes = {};
 
   function getMarkedCells() {
     return _markedCells;
@@ -24,6 +25,8 @@ export default function gameBoardFactory(widthLen) {
 
   function receiveAttack(index) {
     _markedCells.push(index.toString());
+    const shipExists = Object.keys(_shipIndexes).includes(index);
+    return shipExists ? _shipIndexes[index].hit(index) : false;
   }
 
   function _horizontalValid(range) {
@@ -41,9 +44,19 @@ export default function gameBoardFactory(widthLen) {
 
   function _spotTaken(range) {
     return range.reduce(
-      (curr, next) => _shipLocations.includes(next) || curr,
+      (curr, next) =>
+        Object.keys(_shipIndexes).includes(next.toString()) || curr,
       false
     );
+  }
+
+  function _appendShip(origin, orientation, shipLen) {
+    const ship = shipFactory(origin, orientation, shipLen, widthLen);
+    Object.assign(
+      _shipIndexes,
+      Object.fromEntries(ship.getBoundaries().map((idx) => [idx, ship]))
+    );
+    return true;
   }
 
   function placeShip(origin, orientation, shipLen) {
@@ -52,12 +65,15 @@ export default function gameBoardFactory(widthLen) {
       ? _verticalValid(shipSpan)
       : _horizontalValid(shipSpan);
     if (!valid || _spotTaken(shipSpan)) return false;
-    return true, _shipLocations.push(...shipSpan);
+    return _appendShip(origin, orientation, shipLen);
   }
 
   return {
     getMarkedCells,
     receiveAttack,
     placeShip,
+    debug: {
+      _appendShip,
+    },
   };
 }

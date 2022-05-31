@@ -25,7 +25,9 @@ export default function shipFactory(
 
   function hit(index) {
     const gotten = Object.keys(_segments).includes(index.toString());
-    return gotten ? (_segments[index.toString()] = 'hit') : false;
+    if (!gotten) return false;
+    _segments[index.toString()] = 'hit';
+    return 'hit';
   }
 
   function isSunk() {
