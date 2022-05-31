@@ -16,6 +16,7 @@ export default function gameBoardFactory(widthLen) {
   // allShipsDown () => true\false << query
   // const _containedShips = Array(5).fill(shipFactory())
   const _markedCells = [];
+  const _shipLocations = [];
 
   function getMarkedCells() {
     return _markedCells;
@@ -25,7 +26,7 @@ export default function gameBoardFactory(widthLen) {
     _markedCells.push(index.toString());
   }
 
-  function _horizontValid(range) {
+  function _horizontalValid(range) {
     return range.reduce(
       (curr, next) => Math.trunc(parseInt(curr) / 10) === Math.trunc(next) / 10
     );
@@ -33,18 +34,25 @@ export default function gameBoardFactory(widthLen) {
 
   function _verticalValid(range) {
     return range.reduce(
-      (curr, next) => parseInt(curr) % widthLen === parseInt(next) % widthLen
+      (curr, next) => Math.trunc(parseInt(next) / widthLen) < widthLen && curr,
+      true
+    );
+  }
+
+  function _spotTaken(range) {
+    return range.reduce(
+      (curr, next) => _shipLocations.includes(next) || curr,
+      false
     );
   }
 
   function placeShip(origin, orientation, shipLen) {
     const shipSpan = range(origin, shipLen, orientation * widthLen);
     const valid = orientation
-      ? _horizontValid(shipSpan)
-      : _horizontValid(shipSpan);
-    if (!valid) return false;
-    // Vertical: all modulos must remain the same
-    // Horizontal: all positions with divisions by width return equal index division by width
+      ? _verticalValid(shipSpan)
+      : _horizontalValid(shipSpan);
+    if (!valid || _spotTaken(shipSpan)) return false;
+    return true, _shipLocations.push(...shipSpan);
   }
 
   return {
