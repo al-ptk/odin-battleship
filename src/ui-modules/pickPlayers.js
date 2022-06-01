@@ -12,7 +12,7 @@ export default function pickPlayersScreen() {
   });
 
   const btnAI = fancyButton()
-  btnAI.textContent = 'against computer.';
+  btnAI.textContent = 'against a computer.';
   btnAI.style.fontWeight = 600;
   btnAI.style.height = "2.5em";
   btnAI.addEventListener('click', (e) => {
@@ -21,7 +21,7 @@ export default function pickPlayersScreen() {
   container.appendChild(btnAI);
 
   const btnHuman = fancyButton()
-  btnHuman.textContent = 'against human.';
+  btnHuman.textContent = 'against a human.';
   btnHuman.style.fontWeight = 600;
   btnHuman.style.height = '2.5em';
   btnHuman.addEventListener('click', (e) => {

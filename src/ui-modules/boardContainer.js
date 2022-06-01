@@ -1,6 +1,6 @@
 import fancyButton from './fancyButton';
 
-export default function boardContainer(owner) {
+export default function boardContainer(puppeteer, owner) {
   const container = document.createElement('div');
   container.id = 'game-screen';
   container.classList.add('container');

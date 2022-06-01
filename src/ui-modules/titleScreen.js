@@ -2,13 +2,13 @@ import fancyButton from "./fancyButton";
 
 const root = document.querySelector('#app');
 
-export default function titleScreen() {
+export default function titleScreen(puppeteer) {
   const container = document.createElement('div');
   container.id = 'title-screen';
   container.classList.add('container');
 
   Object.assign(container.style, {
-    paddingTop: '40vh',
+    paddingTop: '35vh',
   });
 
   const btn = fancyButton();
@@ -16,6 +16,7 @@ export default function titleScreen() {
   btn.style.fontWeight = 600;
   btn.addEventListener('click', (e) => {
     e.target.parentNode.remove();
+    puppeteer('pick-players');
   });
   container.appendChild(btn);
 

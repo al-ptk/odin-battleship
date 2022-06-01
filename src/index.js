@@ -7,24 +7,24 @@ import titleScreen from './ui-modules/titleScreen';
 
 const root = document.querySelector('#app');
 
-root.appendChild(boardContainer(true));
-root.appendChild(boardContainer(false));
+puppeteer('title-screen');
 
-/**
- * Backlog:
- *  - Make the cv, for fuck's sake
- *  - Create screen controller called puppeteer, because it sounds cool
- *  - Create the board screen
- *  - Create a game over over screen
- *    - How and when should I announce game over?
- */
-  
-// function ScreenCallbackFactory(screen) {
-//   return function () {
-//     root.appendChild(screen());
-//   };
-// }
+function puppeteer(screen, args) {
+  switch (screen) {
+    case 'title-screen':
+      root.appendChild(titleScreen(puppeteer));
+      break;
 
-// const toPickPlayer = ScreenCallbackFactory(pickPlayersScreen);
-// const toNextPlayer = ScreenCallbackFactory(nextPlayer)figma
-;
+    case 'pick-players':
+      root.appendChild(pickPlayersScreen(puppeteer));
+      break;
+
+    case 'next-player':
+      root.appendChild(nextPlayer(puppeteer));
+      break;
+
+    case 'board-container':
+      root.appendChild(nextPlayer(puppeteer, true));
+      break;
+  }
+}
