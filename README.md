@@ -1,6 +1,6 @@
 # odin-battleship
 
-(Project on-going)
+## (Project on-going)
 
 Things I learned:
 
