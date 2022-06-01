@@ -1,12 +1,14 @@
 import style from './stylesheets/index.css';
-import battleBoard from './ui-modules/battleBoard';
+
 import nextPlayer from './ui-modules/nextPlayer';
 import pickPlayersScreen from './ui-modules/pickPlayers';
+import boardContainer from './ui-modules/boardContainer';
 import titleScreen from './ui-modules/titleScreen';
 
 const root = document.querySelector('#app');
 
-root.appendChild(titleScreen());
+root.appendChild(boardContainer());
+root.appendChild(boardContainer());
 
 /**
  * Backlog:
