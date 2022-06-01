@@ -1,4 +1,4 @@
-import { range } from './zonks.js';
+import { range } from '../zonks.js';
 
 export default function shipFactory(
   origin,
