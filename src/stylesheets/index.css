@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -18,7 +20,7 @@ body {
 #app {
   width: 100%;
   height: 100%;
-  background-color: rgba(152, 219, 197, 0.877);
+  background-color: rgb(223, 48, 48);
 }
 
 @media screen and (min-width: 400px) {
@@ -26,4 +28,30 @@ body {
     width: 360px;
     height: 720px;
   }
+}
+
+button.fancy {
+  position: absolute;
+  width: 309px;
+  height: 162px;
+  left: 39px;
+  top: 226px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.92) -11.64%,
+    rgb(34, 34, 34) 19.75%,
+    rgb(34, 34, 34) 19.75%,
+    rgba(0, 0, 0, 0.92) 112.35%
+  );
+  box-shadow: 5px 8px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border-style: none;
+}
+
+.fancyLetters {
+  color: white;
+  font-size: 32px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
 }
