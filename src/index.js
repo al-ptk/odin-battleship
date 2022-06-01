@@ -7,8 +7,8 @@ import titleScreen from './ui-modules/titleScreen';
 
 const root = document.querySelector('#app');
 
-root.appendChild(boardContainer());
-root.appendChild(boardContainer());
+root.appendChild(boardContainer(true));
+root.appendChild(boardContainer(false));
 
 /**
  * Backlog:

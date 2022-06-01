@@ -1,6 +1,6 @@
 import fancyButton from './fancyButton';
 
-export default function boardContainer() {
+export default function boardContainer(owner) {
   const container = document.createElement('div');
   container.id = 'game-screen';
   container.classList.add('container');
@@ -10,19 +10,19 @@ export default function boardContainer() {
     flex: '0 0 auto',
   });
 
+  // The default view is of the opponents's board,
+  // and you must navigate to your own later
+  // Even though, after setting up board,
+  // the view will scroll from the player's board to the enemy's
+  const ownership = owner ? 'to my board. »' : "« to enemy's board.";
+
   const btn = fancyButton();
   btn.style.height = '52px';
-  btn.textContent = 'to my board. »';
+  btn.textContent = ownership;
   container.appendChild(btn);
 
   const board = playerBoard();
-
   container.appendChild(board);
-
-  // const btn2 = fancyButton();
-  // btn2.style.height = '52px';
-  // btn2.textContent = '« to enemy\'s board.';
-  // container.appendChild(btn2);
 
   return container;
 }
