@@ -1,19 +1,17 @@
+import fancyButton from "./fancyButton";
+
 const root = document.querySelector('#app');
 
 export default function nextPlayer() {
   const container = document.createElement('div');
   container.id = "next-player";
+  container.classList.add('container');
 
   Object.assign(container.style, {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: '40vh',
   });
 
-  const btn = document.createElement('button');
-  btn.classList.add('fancy', 'fancyLetters');
+  const btn = fancyButton();
   btn.textContent = 'next player..';
   btn.style.height = '100px'
   btn.style.fontWeight = 600;

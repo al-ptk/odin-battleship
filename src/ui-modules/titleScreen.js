@@ -1,25 +1,23 @@
+import fancyButton from "./fancyButton";
+
 const root = document.querySelector('#app');
 
 export default function titleScreen() {
   const container = document.createElement('div');
-  container.id = "title-screen";
+  container.id = 'title-screen';
+  container.classList.add('container');
 
   Object.assign(container.style, {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: '40vh',
   });
 
-  const btn = document.createElement('button');
-  btn.classList.add('fancy', 'fancyLetters');
+  const btn = fancyButton();
   btn.textContent = 'Fancy Battleship.';
   btn.style.fontWeight = 600;
-  btn.addEventListener('click', e => {
+  btn.addEventListener('click', (e) => {
     e.target.parentNode.remove();
-  })
-  container.appendChild(btn)
-  
+  });
+  container.appendChild(btn);
+
   return container;
 }
