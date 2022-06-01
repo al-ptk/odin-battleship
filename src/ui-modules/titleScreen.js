@@ -1,6 +1,6 @@
 const root = document.querySelector('#app');
 
-export default function titleScreen(nextScreen) {
+export default function titleScreen() {
   const container = document.createElement('div');
   container.id = "title-screen";
 
@@ -17,8 +17,7 @@ export default function titleScreen(nextScreen) {
   btn.textContent = 'Fancy Battleship.';
   btn.style.fontWeight = 600;
   btn.addEventListener('click', e => {
-    e.target.remove();
-    root.appendChild(nextScreen());
+    e.target.parentNode.remove();
   })
   container.appendChild(btn)
   
