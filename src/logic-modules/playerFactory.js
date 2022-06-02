@@ -27,10 +27,23 @@ export default function playerFactory(boardLen) {
     return _board.placeRandomShip(size);
   }
 
+  function getMarkedCells() {
+    return _board.getMarkedCells;
+  }
+
+  function _setRandomBoard() {
+    for (let i = 2; i < 6; i++) {
+      placeRandomShip(i)
+      placeRandomShip(i)
+    }
+  }
+
   return {
     deployShip,
     receiveAttack,
     allShipsSunk,
-    placeRandomShip
+    placeRandomShip,
+    getMarkedCells,
+    _setRandomBoard,
   };
 }

@@ -1,4 +1,4 @@
-import shipFactory from '../shipFactory';
+import shipFactory from '../logic-modules/shipFactory';
 
 describe('Testing the ship object interface', () => {
   const horShip = shipFactory(6, false, 3, 10);

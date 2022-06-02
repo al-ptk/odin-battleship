@@ -1,4 +1,4 @@
-import gameBoardFactory from './gameBoardFactory.js';
+import gameBoardFactory from '../logic-modules/gameBoardFactory';
 
 describe('Testing the gameBoard object', () => {
   const boardLen = 10;

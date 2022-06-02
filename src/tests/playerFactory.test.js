@@ -1,4 +1,4 @@
-import playerFactory from './playerFactory.js';
+import playerFactory from '../logic-modules/playerFactory';
 
 describe('Testing the player object', () => {
   const boardLen = 10;
