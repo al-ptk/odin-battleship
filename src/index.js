@@ -8,7 +8,7 @@ import setupPrompt from './ui-modules/setupPrompt';
 
 const root = document.querySelector('#app');
 
-puppeteer('setup-prompt');
+puppeteer('board-container');
 
 function puppeteer(screen, args) {
   switch (screen) {
@@ -25,7 +25,8 @@ function puppeteer(screen, args) {
       break;
 
     case 'board-container':
-      root.appendChild(nextPlayer(puppeteer, true));
+      root.appendChild(boardContainer(puppeteer, true));
+      root.appendChild(boardContainer(puppeteer, false));
       break;
 
     case 'setup-prompt':

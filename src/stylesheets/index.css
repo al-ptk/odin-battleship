@@ -20,6 +20,7 @@ body {
 #app {
   width: 100vw;
   height: 100vh;
+  position: relative;
 
   background-color: rgb(223, 48, 48);
   display: flex;
@@ -76,4 +77,18 @@ button.fancy {
   grid-template-rows: repeat(10, 1fr);
   grid-template-columns: repeat(10, 1fr);
   gap: 1px;
+}
+
+.stopper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 35vh;
+  background-color: rgba(68, 68, 68, 0.185);
 }
