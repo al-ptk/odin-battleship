@@ -23,9 +23,14 @@ export default function playerFactory(boardLen) {
     return _board.allShipsSunk();
   }
 
+  function placeRandomShip(size) {
+    return _board.placeRandomShip(size);
+  }
+
   return {
     deployShip,
     receiveAttack,
-    allShipsSunk
+    allShipsSunk,
+    placeRandomShip
   };
 }

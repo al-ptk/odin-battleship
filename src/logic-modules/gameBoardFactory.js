@@ -1,4 +1,4 @@
-import { range } from './zonks.js';
+import { range } from '../zonks.js';
 import shipFactory from './shipFactory.js';
 
 export default function gameBoardFactory(widthLen) {
@@ -74,11 +74,29 @@ export default function gameBoardFactory(widthLen) {
     return _allShips;
   }
 
+  function placeRandomShip(size) {
+    let origin,
+      index,
+      orientation,
+      shipSpan,
+      valid = false;
+    do {
+      orientation = Math.random >= 0.5;
+      index = Math.trunc(Math.random() * 100);
+      shipSpan = range(index, size, orientation * widthLen);
+      valid = orientation
+        ? _verticalValid(shipSpan)
+        : _horizontalValid(shipSpan);
+      } while (!valid && !_spotTaken(shipSpan))
+      return `empty spot at ${shipSpan}`
+    }
+
   return {
     getMarkedCells,
     receiveAttack,
     placeShip,
     allShipsSunk,
+    placeRandomShip,
     debug: {
       _peekAtShips,
     },
