@@ -1,14 +1,13 @@
 import style from './stylesheets/index.css';
-
 import nextPlayer from './ui-modules/nextPlayer';
 import pickPlayersScreen from './ui-modules/pickPlayers';
-import boardContainer from './ui-modules/boardContainer';
 import titleScreen from './ui-modules/titleScreen';
 import setupPrompt from './ui-modules/setupPrompt';
+import gameView from './ui-modules/gameView';
 
 const root = document.querySelector('#app');
 
-puppeteer('board-container');
+puppeteer('game-view');
 
 function puppeteer(screen, args) {
   switch (screen) {
@@ -24,9 +23,8 @@ function puppeteer(screen, args) {
       root.appendChild(nextPlayer(puppeteer));
       break;
 
-    case 'board-container':
-      root.appendChild(boardContainer(puppeteer, true));
-      root.appendChild(boardContainer(puppeteer, false));
+    case 'game-view':
+      root.appendChild(gameView(puppeteer, true));
       break;
 
     case 'setup-prompt':

@@ -1,5 +1,6 @@
 import fancyButton from './fancyButton';
 import gameOverModal from './gameOverModal';
+import boardRenderer from './boardRenderer';
 
 export default function boardContainer(puppeteer, owner) {
   const container = document.createElement('div');
@@ -22,26 +23,8 @@ export default function boardContainer(puppeteer, owner) {
   btn.textContent = ownership;
   container.appendChild(btn);
 
-  const board = playerBoard();
+  const board = boardRenderer();
   container.appendChild(board);
-
-  container.appendChild(gameOverModal());
-
-  return container;
-}
-
-function playerBoard() {
-  const container = document.createElement('div');
-  container.classList.add('board');
-
-  for (let i = 0; i < 100; i++) {
-    const cell = document.createElement('div');
-    cell.style.backgroundColor = 'white';
-    cell.addEventListener('click', e => {
-      console.log(i);
-    })
-    container.appendChild(cell);
-  }
 
   return container;
 }
