@@ -4,10 +4,11 @@ import pickPlayersScreen from './ui-modules/pickPlayers';
 import titleScreen from './ui-modules/titleScreen';
 import setupPrompt from './ui-modules/setupPrompt';
 import gameView from './ui-modules/gameView';
+import setupBoard from './ui-modules/setupBoard';
 
 const root = document.querySelector('#app');
 
-puppeteer('game-view');
+puppeteer('setup-board');
 
 function puppeteer(screen, args) {
   switch (screen) {
@@ -29,6 +30,10 @@ function puppeteer(screen, args) {
 
     case 'setup-prompt':
       root.appendChild(setupPrompt());
+      break;
+
+    case 'setup-board':
+      root.appendChild(setupBoard());
       break;
   }
 }
