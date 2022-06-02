@@ -1,8 +1,7 @@
 import playerFactory from '../logic-modules/playerFactory';
 
 describe('Testing the player object', () => {
-  const boardLen = 10;
-  const player1 = playerFactory(boardLen);
+  const player1 = playerFactory(10);
 
   test('Player successfully deploys horizontal ship', () => {
     expect(() => {
@@ -31,23 +30,25 @@ describe('Testing the player object', () => {
     }).toThrowError();
   });
 
-  const player2 = playerFactory(10);
-  player2.deployShip(0, false, 1);
-
-  test("Player's board capable of receiving an attack", () => {
-    expect(() => player2.receiveAttack(99)).not.toThrowError();
-  });
-
-  test('Wrong shot misses ship', () => {
-    expect(player2.receiveAttack(1)).toBe('miss');
-  });
-
-  test('Right shot hits ship', () => {
-    expect(player2.receiveAttack(0)).toBe('hit');
-  });
-
-  test('Get "all sunk" message properly', () => {
-    expect(player2.allShipsSunk()).toBeTruthy();
-  })
-
 });
+
+describe('Are shots being processed correctly', () => {
+    const player2 = playerFactory(10);
+    player2.deployShip(0, false, 1);
+
+    test("Player's board capable of receiving an attack", () => {
+      expect(() => player2.receiveAttack(99)).not.toThrowError();
+    });
+
+    test('Wrong shot misses ship', () => {
+      expect(player2.receiveAttack(1)).toBe('miss');
+    });
+
+    test('Right shot hits ship', () => {
+      expect(player2.receiveAttack(0)).toBe('hit');
+    });
+
+    test('Get "all sunk" message properly', () => {
+      expect(player2.allShipsSunk()).toBeTruthy();
+    });
+})

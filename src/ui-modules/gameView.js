@@ -6,8 +6,8 @@ export default function gameView(puppeteer) {
   container.id = 'game-view';
 
   container.appendChild(boardContainer(puppeteer, true));
-  container.appendChild(boardContainer(puppeteer, false));
-  container.appendChild(gameOverModal(puppeteer));
+  // container.appendChild(boardContainer(puppeteer, false));
+  // container.appendChild(gameOverModal(puppeteer));
 
   return container;
 }

@@ -1,9 +1,6 @@
 import gameBoardFactory from './gameBoardFactory.js';
 
 export default function playerFactory(boardLen) {
-  // set up the ships on the board
-  // shoot each other until one has all ships sunk
-  // if all ships sunk, send game over signal
   const _board = gameBoardFactory(boardLen);
 
   function deployShip(index, orientation, size) {
@@ -23,19 +20,27 @@ export default function playerFactory(boardLen) {
     return _board.allShipsSunk();
   }
 
-  function placeRandomShip(size) {
-    return _board.placeRandomShip(size);
+  function placeRandomShip(size, boardCellNumber = 100) {
+    return _board.placeRandomShip(size, boardCellNumber);
   }
 
   function getMarkedCells() {
     return _board.getMarkedCells;
   }
 
-  function _setRandomBoard() {
+  function setRandomBoard() {
     for (let i = 2; i < 6; i++) {
       placeRandomShip(i)
       placeRandomShip(i)
     }
+  }
+
+  function peekAtShips () {
+    return _board.peekAtShips();
+  }
+
+  function peekAtShipIndexes () {
+    return _board.getShipIndexes();
   }
 
   return {
@@ -44,6 +49,8 @@ export default function playerFactory(boardLen) {
     allShipsSunk,
     placeRandomShip,
     getMarkedCells,
-    _setRandomBoard,
+    setRandomBoard,
+    peekAtShips,
+    peekAtShipIndexes
   };
 }

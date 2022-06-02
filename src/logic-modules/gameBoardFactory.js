@@ -33,11 +33,10 @@ export default function gameBoardFactory(widthLen) {
   }
 
   function _spotTaken(range) {
-    return range.reduce(
-      (curr, next) =>
-        Object.keys(_shipIndexes).includes(next.toString()) || curr,
-      false
+    const anyTaken = range.filter((elem) =>
+      Object.keys(_shipIndexes).includes(elem.toString())
     );
+    return anyTaken.length;
   }
 
   function _appendShip(origin, orientation, shipLen) {
@@ -69,27 +68,31 @@ export default function gameBoardFactory(widthLen) {
   function allShipsSunk() {
     return _allShips.reduce((curr, next) => next.isSunk() && curr, true);
   }
-
-  function _peekAtShips() {
+  
+  function placeRandomShip(size, boardCellNumber = 100) {
+    let origin,
+    orientation = true,
+    shipSpan,
+    valid = false;
+    do {
+      orientation = Math.random() >= 0.5;
+      origin = Math.trunc(Math.random() * boardCellNumber);
+      shipSpan = range(origin, size, orientation * widthLen);
+      valid = orientation
+      ? _verticalValid(shipSpan)
+      : _horizontalValid(shipSpan);
+    } while (!valid || _spotTaken(shipSpan));
+    _appendShip(origin, orientation, size);
+    return `empty spot at ${shipSpan}`;
+  }
+  
+  function peekAtShips() {
     return _allShips;
   }
 
-  function placeRandomShip(size) {
-    let origin,
-      index,
-      orientation,
-      shipSpan,
-      valid = false;
-    do {
-      orientation = Math.random >= 0.5;
-      index = Math.trunc(Math.random() * 100);
-      shipSpan = range(index, size, orientation * widthLen);
-      valid = orientation
-        ? _verticalValid(shipSpan)
-        : _horizontalValid(shipSpan);
-      } while (!valid && !_spotTaken(shipSpan))
-      return `empty spot at ${shipSpan}`
-    }
+  function getShipIndexes() {
+    return Object.keys(_shipIndexes);
+  }
 
   return {
     getMarkedCells,
@@ -97,8 +100,7 @@ export default function gameBoardFactory(widthLen) {
     placeShip,
     allShipsSunk,
     placeRandomShip,
-    debug: {
-      _peekAtShips,
-    },
+    peekAtShips,
+    getShipIndexes,
   };
 }

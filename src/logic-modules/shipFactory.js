@@ -37,9 +37,14 @@ export default function shipFactory(
     );
   }
 
+  function getOrientation () {
+    return orientation;
+  }
+
   return {
     getBoundaries,
     hit,
     isSunk,
+    getOrientation,
   };
 }
