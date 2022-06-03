@@ -12,25 +12,6 @@ export default function setupBoard() {
   container.id = 'setup-board';
   container.style.paddingTop = '20vh';
 
-  // Orientation button
-  const toggle = document.createElement('button');
-  toggle.classList.add('toggle-orientation');
-  toggle.value = false;
-  toggle.textContent = 'Hor';
-  toggle.style.backgroundColor = 'violet';
-  toggle.addEventListener('click', (e) => {
-    if (e.target.value === 'false') {
-      e.target.value = true;
-      e.target.textContent = 'Ver';
-      e.target.style.backgroundColor = 'lightgreen';
-    } else {
-      e.target.value = false;
-      e.target.textContent = 'Hor';
-      e.target.style.backgroundColor = 'violet';
-    }
-  });
-  container.appendChild(toggle);
-
   // Board configurations;
   const board = boardRenderer();
   for (const node of board.childNodes) {
@@ -54,9 +35,22 @@ export default function setupBoard() {
   }
   container.appendChild(board);
 
+  // Orientation button
+  const toggle = makeToggleButton();
+
+  // Ship picker
+  const pickerContainer = document.createElement('div');
+  pickerContainer.appendChild(toggle);
+  pickerContainer.classList.add('picker-container');
+  for (let i = 5; i > 1; i--) {
+    pickerContainer.appendChild(mockShip(i));
+  }
+  container.appendChild(pickerContainer);  
+
   return container;
 }
 
+/* --------------------  Helper Functions      ----------------- */
 function spotTaken(span) {
   const anyTaken = span.filter((elem) =>
     Object.keys(shipBucket).includes(elem.toString())
@@ -100,17 +94,32 @@ function removeShip(e) {
   }
 }
 
+function makeToggleButton() {
+  const toggle = document.createElement('button');
+  toggle.classList.add('toggle-orientation');
+  toggle.value = false;
+  toggle.textContent = 'Hor';
+  toggle.style.backgroundColor = 'violet';
+  toggle.addEventListener('click', (e) => {
+    if (e.target.value === 'false') {
+      e.target.value = true;
+      e.target.textContent = 'Ver';
+      e.target.style.backgroundColor = 'lightgreen';
+    } else {
+      e.target.value = false;
+      e.target.textContent = 'Hor';
+      e.target.style.backgroundColor = 'violet';
+    }
+  });
+  return toggle;
+}
 
-/*
-
-select ship to place:
-   Once I click on a ship of a certain size, it stays highlighted
-   to indicated that the ship selected is the one being placed
-   If you ran out of ships of that size, it immediatly unfocus\blurs
-
-Clicking on a empty cell removes a ship and updates ship count
-Clicking on a ship removes a ship and updates ship count
-
-Click the oriention toggle button for horizontal \ vertical boats
-
-*/
+function mockShip(size) {
+  const container = document.createElement('div');
+  for (let i = 0; i < size; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('mock-cell');
+    container.appendChild(cell);
+  }
+  return container;
+}
