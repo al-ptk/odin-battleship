@@ -15,18 +15,24 @@ export default function boardContainer(owner, game) {
 
   const btn = fancyButton();
   btn.style.height = '52px';
-  const ownership = owner ? 'to my board. »' : "« to enemy's board.";
+  const ownership = owner ? "my board." : 'my enemy\'s board';
   btn.textContent = ownership;
-  btn.addEventListener('click', (e) => {
-    container.parentNode.style.transform = 'translateX(300px)';
-  });
   container.appendChild(btn);
 
   const board = boardRenderer(game);
-  if (owner) {
+  if (!owner) {
+    for (const cell of board.children) {
+      cell.addEventListener('click', (e) => {
+        const idx = e.target.id.slice(1);
+        game.registerAttack(parseInt(idx));
+        renderShots(board, game.getEnemyData().marks);
+        game.cyclePlayer();
+        container.parentNode.remove();
+        game.puppeteer('next-player');
+      });
+    }
     renderShots(board, game.getEnemyData().marks);
-  } 
-  else{
+  } else {
     renderShots(board, game.getCurrentData().marks);
     renderShips(board, game.getCurrentData().ships);
   }

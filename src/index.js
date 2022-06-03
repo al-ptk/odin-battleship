@@ -17,7 +17,6 @@ const game = (function () {
 
   for (const p of players) {
     p.setRandomBoard();
-    p.receiveAttack(0);
   }
 
   function resetGame() {
@@ -27,11 +26,10 @@ const game = (function () {
   }
 
   function registerAttack(idx) {
-    players[currentPlayer].receiveAttack(idx);
-    if (players[currentPlayer].allShipsSunk()) {
+    players[!currentPlayer * 1].receiveAttack(idx);
+    if (players[!currentPlayer * 1].allShipsSunk()) {
       console.log('game over');
     }
-    cyclePlayer();
   }
 
   function setAiPlayer() {
@@ -105,6 +103,7 @@ const game = (function () {
     deployAllShips,
     getCurrentData,
     getEnemyData,
+    cyclePlayer
   };
 })();
 
