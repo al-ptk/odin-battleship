@@ -2,6 +2,7 @@ import boardContainer from './boardContainer';
 import boardRenderer from './boardRenderer';
 import { range } from '../zonks';
 import { shipIcon } from './renderState';
+import fancyButton from './fancyButton';
 
 const boardLen = 10;
 const shipBucket = {};
@@ -12,7 +13,18 @@ export default function setupBoard() {
   const container = document.createElement('div');
   container.classList.add('container');
   container.id = 'setup-board';
-  container.style.paddingTop = '20vh';
+  container.style.paddingTop = '10vh';
+
+  // Done button
+  const done = fancyButton();
+  done.textContent = 'deploying ships..';
+  done.style.height = '2em';
+  done.style.padding = '10px';
+  done.addEventListener('click', (e) => {
+    if (!allShipsDeployed()) return;
+    e.target.parentNode.remove();
+  });
+  container.appendChild(done);
 
   // Board configurations;
   const board = boardRenderer();
@@ -108,8 +120,8 @@ function removeShip(e) {
   updateAmount(ship.length, true);
   for (let i = 0; i < shipsToBeshipped.length; i++) {
     if (shipsToBeshipped[i][0] === ship[0]) {
-      shipsToBeshipped.splice(i,1);
-      break
+      shipsToBeshipped.splice(i, 1);
+      break;
     }
     console.log(i);
   }
@@ -162,4 +174,12 @@ function makeCounter(size) {
 function updateAmount(size, add) {
   pickerSize[size] += 2 * add - 1;
   document.querySelector(`#amount${size}`).textContent = pickerSize[size];
+}
+
+function allShipsDeployed() {
+  let allDeployed = true;
+  for (let i = 5; i > 1; i--) {
+    allDeployed &= pickerSize[i] === 0;
+  }
+  return allDeployed;
 }
