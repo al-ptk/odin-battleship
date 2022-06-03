@@ -1,5 +1,5 @@
 import style from './stylesheets/index.css';
-import nextPlayer from './ui-modules/nextPlayer';
+import nextPlayer from './ui-modules/nextPlayer'
 import pickPlayersScreen from './ui-modules/pickPlayers';
 import titleScreen from './ui-modules/titleScreen';
 import setupPrompt from './ui-modules/setupPrompt';
@@ -26,7 +26,7 @@ const game = (function () {
     if (players[currentPlayer].allShipsSunk()) {
       console.log('game over');
     }
-    nextPlayer();
+    cyclePlayer();
   }
 
   function setAiPlayer() {
@@ -66,7 +66,7 @@ const game = (function () {
     return currentPlayer;
   }
 
-  function nextPlayer() {
+  function cyclePlayer() {
     currentPlayer = !currentPlayer;
   }
 
@@ -75,7 +75,6 @@ const game = (function () {
     for (const ship of shipsToBeDeployed) {
       players[weirdIndexFix].deployShip(...ship);
     }
-    console.log(players[+currentPlayer].peekAtShips());
   }
 
   return {

@@ -1,10 +1,10 @@
-import fancyButton from "./fancyButton";
+import fancyButton from './fancyButton';
 
 const root = document.querySelector('#app');
 
-export default function nextPlayer(callback) {
+export default function nextPlayer(game) {
   const container = document.createElement('div');
-  container.id = "next-player";
+  container.id = 'next-player';
   container.classList.add('container');
 
   Object.assign(container.style, {
@@ -12,14 +12,14 @@ export default function nextPlayer(callback) {
   });
 
   const btn = fancyButton();
-  btn.textContent = 'next player..';
-  btn.style.height = '100px'
+  btn.textContent = `player ${game.getCurrentPlayer() + 1} is next..`;
+  btn.style.height = '100px';
   btn.style.fontWeight = 600;
-  btn.addEventListener('click', e => {
+  btn.addEventListener('click', (e) => {
     e.target.parentNode.remove();
-    callback();
-  })
-  container.appendChild(btn)
-  
+    game.puppeteer('game-view');
+  });
+  container.appendChild(btn);
+
   return container;
 }

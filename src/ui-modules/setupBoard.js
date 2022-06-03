@@ -25,6 +25,7 @@ export default function setupBoard(game) {
     if (!allShipsDeployed()) return;
     e.target.parentNode.remove();
     game.deployAllShips(shipsToBeshipped);
+    game.puppeteer('next-player');
   });
   container.appendChild(done);
 
