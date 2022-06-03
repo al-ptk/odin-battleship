@@ -5,6 +5,7 @@ import { shipIcon } from './renderState';
 
 const boardLen = 10;
 const shipBucket = {};
+const shipsToBeshipped = [];
 const pickerSize = { size: 0, 2: 2, 3: 2, 4: 2, 5: 2 };
 
 export default function setupBoard() {
@@ -34,6 +35,7 @@ export default function setupBoard() {
         shipBucket,
         Object.fromEntries(span.map((elem) => [elem, span]))
       );
+      shipsToBeshipped.push([idx, orientation, size, boardLen]);
       renderShip(span);
     });
   }
@@ -104,6 +106,13 @@ function removeShip(e) {
   const cellId = e.target.parentNode.id.slice(1);
   const ship = shipBucket[cellId];
   updateAmount(ship.length, true);
+  for (let i = 0; i < shipsToBeshipped.length; i++) {
+    if (shipsToBeshipped[i][0] === ship[0]) {
+      shipsToBeshipped.splice(i,1);
+      break
+    }
+    console.log(i);
+  }
   for (const part of ship) {
     document.querySelector(`#c${part}`).innerHTML = '';
     delete shipBucket[part];
