@@ -5,7 +5,7 @@ import { shipIcon } from './renderState';
 
 const boardLen = 10;
 const shipBucket = {};
-const pickerSize = { size: 0, '2': 2, '3':2, '4':2, '5':2};
+const pickerSize = { size: 0, 2: 2, 3: 2, 4: 2, 5: 2 };
 
 export default function setupBoard() {
   const container = document.createElement('div');
@@ -19,6 +19,7 @@ export default function setupBoard() {
     node.addEventListener('click', (e) => {
       const idx = parseInt(e.target.id.slice(1));
       if (!pickerSize.size) return;
+      if (!pickerSize[pickerSize.size]) return;
       const size = pickerSize.size;
       const orientation = toggle.value === 'false' ? false : true;
       const span = range(idx, size, orientation * boardLen);
@@ -28,6 +29,7 @@ export default function setupBoard() {
         console.log('taken');
         return;
       }
+      updateAmount(size, false);
       Object.assign(
         shipBucket,
         Object.fromEntries(span.map((elem) => [elem, span]))
@@ -54,7 +56,6 @@ export default function setupBoard() {
       }
       e.target.parentNode.classList.add('active-ship');
       pickerSize.size = i;
-      console.log(pickerSize.size);
     });
     shipPicker.appendChild(ms);
     shipPicker.appendChild(counter);
@@ -102,6 +103,7 @@ function renderShip(span) {
 function removeShip(e) {
   const cellId = e.target.parentNode.id.slice(1);
   const ship = shipBucket[cellId];
+  updateAmount(ship.length, true);
   for (const part of ship) {
     document.querySelector(`#c${part}`).innerHTML = '';
     delete shipBucket[part];
@@ -138,12 +140,17 @@ function mockShip(size) {
   return container;
 }
 
-
-function makeCounter (size) {
+function makeCounter(size) {
   const counter = document.createElement('div');
   counter.classList.add('picker-counter');
-  const amount = document.createElement('p')
+  const amount = document.createElement('p');
+  amount.id = `amount${size}`;
   amount.textContent = pickerSize[size];
   counter.appendChild(amount);
-  return counter
+  return counter;
+}
+
+function updateAmount(size, add) {
+  pickerSize[size] += 2 * add - 1;
+  document.querySelector(`#amount${size}`).textContent = pickerSize[size];
 }
