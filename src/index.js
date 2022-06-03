@@ -26,7 +26,7 @@ const game = (function () {
     if (players[currentPlayer].allShipsSunk()) {
       console.log('game over');
     }
-    currentPlayer = !currentPlayer;
+    nextPlayer();
   }
 
   function setAiPlayer() {
@@ -62,12 +62,30 @@ const game = (function () {
     }
   }
 
+  function getCurrentPlayer() {
+    return currentPlayer;
+  }
+
+  function nextPlayer() {
+    currentPlayer = !currentPlayer;
+  }
+
+  function deployAllShips(shipsToBeDeployed) {
+    let weirdIndexFix = currentPlayer + 1 - 1
+    for (const ship of shipsToBeDeployed) {
+      players[weirdIndexFix].deployShip(...ship);
+    }
+    console.log(players[+currentPlayer].peekAtShips());
+  }
+
   return {
     resetGame,
     registerAttack,
     setAiPlayer,
     puppeteer,
+    getCurrentPlayer,
+    deployAllShips
   };
 })();
 
-game.puppeteer('title-screen');
+game.puppeteer('setup-board');

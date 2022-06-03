@@ -9,7 +9,7 @@ const shipBucket = {};
 const shipsToBeshipped = [];
 const pickerSize = { size: 0, 2: 2, 3: 2, 4: 2, 5: 2 };
 
-export default function setupBoard() {
+export default function setupBoard(game) {
   const container = document.createElement('div');
   container.classList.add('container');
   container.id = 'setup-board';
@@ -24,6 +24,7 @@ export default function setupBoard() {
   done.addEventListener('click', (e) => {
     if (!allShipsDeployed()) return;
     e.target.parentNode.remove();
+    game.deployAllShips(shipsToBeshipped);
   });
   container.appendChild(done);
 
@@ -48,7 +49,7 @@ export default function setupBoard() {
         shipBucket,
         Object.fromEntries(span.map((elem) => [elem, span]))
       );
-      shipsToBeshipped.push([idx, orientation, size, boardLen]);
+      shipsToBeshipped.push([idx, orientation, size]);
       renderShip(span);
       if (allShipsDeployed()) {
         document.querySelector('#done-button').textContent = 'done?.'
@@ -127,7 +128,6 @@ function removeShip(e) {
       shipsToBeshipped.splice(i, 1);
       break;
     }
-    console.log(i);
   }
   for (const part of ship) {
     document.querySelector(`#c${part}`).innerHTML = '';
