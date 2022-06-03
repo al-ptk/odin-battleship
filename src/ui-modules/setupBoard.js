@@ -5,7 +5,7 @@ import { shipIcon } from './renderState';
 
 const boardLen = 10;
 const shipBucket = {};
-const pickerSize = { size: 0 };
+const pickerSize = { size: 0, '2': 2, '3':2, '4':2, '5':2};
 
 export default function setupBoard() {
   const container = document.createElement('div');
@@ -41,11 +41,12 @@ export default function setupBoard() {
   const toggle = makeToggleButton();
 
   // Ship picker
-  const pickerContainer = document.createElement('div');
-  pickerContainer.appendChild(toggle);
-  pickerContainer.classList.add('picker-container');
+  const shipPicker = document.createElement('div');
+  shipPicker.appendChild(toggle);
+  shipPicker.classList.add('picker-container');
   for (let i = 5; i > 1; i--) {
     const ms = mockShip(i);
+    const counter = makeCounter(i);
     ms.addEventListener('click', (e) => {
       const selected = document.querySelector('.active-ship');
       if (selected) {
@@ -55,9 +56,10 @@ export default function setupBoard() {
       pickerSize.size = i;
       console.log(pickerSize.size);
     });
-    pickerContainer.appendChild(ms);
+    shipPicker.appendChild(ms);
+    shipPicker.appendChild(counter);
   }
-  container.appendChild(pickerContainer);
+  container.appendChild(shipPicker);
 
   return container;
 }
@@ -134,4 +136,14 @@ function mockShip(size) {
     container.appendChild(cell);
   }
   return container;
+}
+
+
+function makeCounter (size) {
+  const counter = document.createElement('div');
+  counter.classList.add('picker-counter');
+  const amount = document.createElement('p')
+  amount.textContent = pickerSize[size];
+  counter.appendChild(amount);
+  return counter
 }

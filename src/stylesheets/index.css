@@ -128,9 +128,9 @@ button.fancy {
 
   /* Inner Layout */
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  gap: 40px;
+  padding: 0 10px;
 }
 
 .mock-cell {
@@ -141,4 +141,14 @@ button.fancy {
 
 .active-ship {
   border: 3px solid rgb(212, 24, 24);
+}
+
+.picker-counter {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
