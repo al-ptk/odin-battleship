@@ -23,9 +23,13 @@ export default function boardContainer(owner, game) {
   container.appendChild(btn);
 
   const board = boardRenderer(game);
-  owner
-    ? renderShips(board, game.getPlayerShips())
-    : renderShots(board, game.getPlayerMarks());
+  if (owner) {
+    renderShots(board, game.getEnemyData().marks);
+  } 
+  else{
+    renderShots(board, game.getCurrentData().marks);
+    renderShips(board, game.getCurrentData().ships);
+  }
   container.appendChild(board);
 
   return container;

@@ -27,6 +27,7 @@ export default function shipFactory(
     const gotten = Object.keys(_segments).includes(index.toString());
     if (!gotten) return false;
     _segments[index.toString()] = 'hit';
+    console.log('hit')
     return 'hit';
   }
 
@@ -37,7 +38,7 @@ export default function shipFactory(
     );
   }
 
-  function getOrientation () {
+  function getOrientation() {
     return orientation;
   }
 

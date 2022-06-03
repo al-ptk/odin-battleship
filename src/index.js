@@ -17,7 +17,7 @@ const game = (function () {
 
   for (const p of players) {
     p.setRandomBoard();
-    p.receiveAttack(0)
+    p.receiveAttack(0);
   }
 
   function resetGame() {
@@ -82,12 +82,18 @@ const game = (function () {
     }
   }
 
-  function getPlayerShips() {
-    return players[currentPlayer + 1 - 1].peekAtShips();
+  function getCurrentData() {
+    return {
+      ships: players[currentPlayer + 1 - 1].peekAtShips(),
+      marks: players[currentPlayer + 1 - 1].getMarkedCells(),
+    };
   }
 
-  function getPlayerMarks() {
-    return players[currentPlayer + 1 - 1].getMarkedCells();
+  function getEnemyData() {
+    return {
+      ships: players[!currentPlayer + 1 - 1].peekAtShips(),
+      marks: players[!currentPlayer + 1 - 1].getMarkedCells(),
+    };
   }
 
   return {
@@ -97,8 +103,8 @@ const game = (function () {
     puppeteer,
     getCurrentPlayer,
     deployAllShips,
-    getPlayerMarks,
-    getPlayerShips,
+    getCurrentData,
+    getEnemyData,
   };
 })();
 
