@@ -47,9 +47,8 @@ export default function setupBoard() {
       }
       Object.assign(
         shipBucket,
-        Object.fromEntries(span.map((elem) => [elem, [span]]))
+        Object.fromEntries(span.map((elem) => [elem, span]))
       );
-      console.log(shipBucket);
       renderShip(span);
     });
   }
@@ -88,9 +87,20 @@ function renderShip(span) {
     const img = shipIcon(startTip | endTip, endTip, orientation);
     img.style.position = 'absolute';
     img.style.zIndex = '5';
+    img.addEventListener('click', removeShip);
     cell.appendChild(img);
   }
 }
+
+function removeShip(e) {
+  const cellId = e.target.parentNode.id.slice(1);
+  const ship = shipBucket[cellId];
+  for (const part of ship) {
+    document.querySelector(`#c${part}`).innerHTML = '';
+    delete shipBucket[part];
+  }
+}
+
 
 /*
 
