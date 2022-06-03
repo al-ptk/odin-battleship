@@ -17,6 +17,7 @@ export default function setupBoard() {
 
   // Done button
   const done = fancyButton();
+  done.id = 'done-button';
   done.textContent = 'deploying ships..';
   done.style.height = '2em';
   done.style.padding = '10px';
@@ -49,6 +50,9 @@ export default function setupBoard() {
       );
       shipsToBeshipped.push([idx, orientation, size, boardLen]);
       renderShip(span);
+      if (allShipsDeployed()) {
+        document.querySelector('#done-button').textContent = 'done?.'
+      }
     });
   }
   container.appendChild(board);
