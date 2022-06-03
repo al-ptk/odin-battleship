@@ -2,14 +2,15 @@ import flame from '../images/flame.svg';
 import shipTip from '../images/shipTip.svg';
 import shipBody from '../images/shipBody.svg';
 
-function flameIcon() {
+export function flameIcon() {
   const img = document.createElement('img');
   img.src = flame;
   img.style.width = '24px';
   img.style.height = '24px';
   return img;
 }
-function shipIcon(tip, end, orientation) {
+
+export function shipIcon(tip, end, orientation) {
   const img = document.createElement('img');
   img.src = tip ? shipTip : shipBody;
   if (!orientation) {

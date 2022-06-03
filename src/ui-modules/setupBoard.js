@@ -1,10 +1,10 @@
 import boardContainer from './boardContainer';
 import boardRenderer from './boardRenderer';
 import { range } from '../zonks';
+import { shipIcon } from './renderState';
 
 const boardLen = 10;
-const shipIndexes = [];
-const shipsToAppend = [];
+const shipBucket = {};
 
 export default function setupBoard() {
   const container = document.createElement('div');
@@ -16,8 +16,18 @@ export default function setupBoard() {
   const toggle = document.createElement('button');
   toggle.classList.add('toggle-orientation');
   toggle.value = false;
+  toggle.textContent = 'Hor';
+  toggle.style.backgroundColor = 'violet';
   toggle.addEventListener('click', (e) => {
-    e.target.value = e.target.value === "false" ? true : false;
+    if (e.target.value === 'false') {
+      e.target.value = true;
+      e.target.textContent = 'Ver';
+      e.target.style.backgroundColor = 'lightgreen';
+    } else {
+      e.target.value = false;
+      e.target.textContent = 'Hor';
+      e.target.style.backgroundColor = 'violet';
+    }
   });
   container.appendChild(toggle);
 
@@ -27,7 +37,7 @@ export default function setupBoard() {
     node.addEventListener('click', (e) => {
       const idx = parseInt(e.target.id.slice(1));
       const size = 3;
-      const orientation = toggle === "false" ? true : false;;
+      const orientation = toggle.value === 'false' ? false : true;
       const span = range(idx, size, orientation * boardLen);
       const valid = orientation ? verValid(span) : horValid(span);
       if (!valid) return;
@@ -35,8 +45,12 @@ export default function setupBoard() {
         console.log('taken');
         return;
       }
-      shipIndexes.push(...span);
-      console.log(span);
+      Object.assign(
+        shipBucket,
+        Object.fromEntries(span.map((elem) => [elem, [span]]))
+      );
+      console.log(shipBucket);
+      renderShip(span);
     });
   }
   container.appendChild(board);
@@ -45,7 +59,9 @@ export default function setupBoard() {
 }
 
 function spotTaken(span) {
-  const anyTaken = span.filter((elem) => shipIndexes.includes(elem));
+  const anyTaken = span.filter((elem) =>
+    Object.keys(shipBucket).includes(elem.toString())
+  );
   return anyTaken.length;
 }
 
@@ -59,6 +75,21 @@ function horValid(span) {
 
 function verValid(span) {
   return span.reduce((curr, next) => next / boardLen < boardLen && curr, true);
+}
+
+function renderShip(span) {
+  const orientation = span[0] % boardLen === span[1] % boardLen;
+
+  for (let i = 0; i < span.length; i++) {
+    const cell = document.querySelector(`#c${span[i]}`);
+    cell.style.position = 'relative';
+    const startTip = i === 0;
+    const endTip = i === span.length - 1;
+    const img = shipIcon(startTip | endTip, endTip, orientation);
+    img.style.position = 'absolute';
+    img.style.zIndex = '5';
+    cell.appendChild(img);
+  }
 }
 
 /*
