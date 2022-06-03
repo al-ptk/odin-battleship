@@ -27,8 +27,8 @@ export function shipIcon(tip, end, orientation) {
   return img;
 }
 export function renderShots(board, playerMarks) {
-  for (const shot of player.getMarkedCells()) {
-    const cell = document.querySelector(`.board #c${shot}`);
+  for (const shot of playerMarks) {
+    const cell = board.children[shot];
     const img = flameIcon();
     img.style.position = 'absolute';
     img.style.zIndex = '10';

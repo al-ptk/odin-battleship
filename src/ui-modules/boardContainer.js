@@ -1,7 +1,7 @@
 import fancyButton from './fancyButton';
 import gameOverModal from './gameOverModal';
 import boardRenderer from './boardRenderer';
-import { renderShips } from './renderState';
+import { renderShips, renderShots } from './renderState';
 
 export default function boardContainer(owner, game) {
   const container = document.createElement('div');
@@ -18,15 +18,14 @@ export default function boardContainer(owner, game) {
   const ownership = owner ? 'to my board. »' : "« to enemy's board.";
   btn.textContent = ownership;
   btn.addEventListener('click', (e) => {
-    container.parentNode.style.transform = "translateX(300px)";
+    container.parentNode.style.transform = 'translateX(300px)';
   });
   container.appendChild(btn);
 
-
-
   const board = boardRenderer(game);
-  board.classList.add(owner ? 'owner' : 'enemy')
-  renderShips(board, game.getPlayerShips());
+  owner
+    ? renderShips(board, game.getPlayerShips())
+    : renderShots(board, game.getPlayerMarks());
   container.appendChild(board);
 
   return container;

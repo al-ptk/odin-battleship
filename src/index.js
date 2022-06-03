@@ -17,6 +17,7 @@ const game = (function () {
 
   for (const p of players) {
     p.setRandomBoard();
+    p.receiveAttack(0)
   }
 
   function resetGame() {
