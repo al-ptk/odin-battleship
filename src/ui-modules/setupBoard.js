@@ -12,21 +12,31 @@ export default function setupBoard() {
   container.id = 'setup-board';
   container.style.paddingTop = '20vh';
 
+  // Orientation button
+  const toggle = document.createElement('button');
+  toggle.classList.add('toggle-orientation');
+  toggle.value = false;
+  toggle.addEventListener('click', (e) => {
+    e.target.value = e.target.value === "false" ? true : false;
+  });
+  container.appendChild(toggle);
+
+  // Board configurations;
   const board = boardRenderer();
   for (const node of board.childNodes) {
     node.addEventListener('click', (e) => {
       const idx = parseInt(e.target.id.slice(1));
       const size = 3;
-      const orientation = true;
+      const orientation = toggle === "false" ? true : false;;
       const span = range(idx, size, orientation * boardLen);
       const valid = orientation ? verValid(span) : horValid(span);
       if (!valid) return;
       if (spotTaken(span)) {
         console.log('taken');
-        return
+        return;
       }
-      shipIndexes.push(...span)
-      console.log(span)
+      shipIndexes.push(...span);
+      console.log(span);
     });
   }
   container.appendChild(board);
@@ -34,8 +44,8 @@ export default function setupBoard() {
   return container;
 }
 
-function spotTaken (span) {
-  const anyTaken = span.filter(elem => shipIndexes.includes(elem));
+function spotTaken(span) {
+  const anyTaken = span.filter((elem) => shipIndexes.includes(elem));
   return anyTaken.length;
 }
 
