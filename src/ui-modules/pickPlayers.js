@@ -2,7 +2,7 @@ import fancyButton from "./fancyButton";
 
 const root = document.querySelector('#app');
 
-export default function pickPlayersScreen() {
+export default function pickPlayersScreen(game) {
   const container = document.createElement('div');
   container.id = 'pick-players';
   container.classList.add('container');
@@ -17,6 +17,8 @@ export default function pickPlayersScreen() {
   btnAI.style.height = "2.5em";
   btnAI.addEventListener('click', (e) => {
     e.target.parentNode.remove();
+    game.setAiPlayer();
+    game.puppeteer('setup-prompt')
   });
   container.appendChild(btnAI);
 
@@ -26,6 +28,7 @@ export default function pickPlayersScreen() {
   btnHuman.style.height = '2.5em';
   btnHuman.addEventListener('click', (e) => {
     e.target.parentNode.remove();
+    game.puppeteer('setup-prompt');
   });
   container.appendChild(btnHuman);
 

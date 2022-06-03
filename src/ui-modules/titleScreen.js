@@ -2,7 +2,7 @@ import fancyButton from "./fancyButton";
 
 const root = document.querySelector('#app');
 
-export default function titleScreen(callback) {
+export default function titleScreen(game) {
   const container = document.createElement('div');
   container.id = 'title-screen';
   container.classList.add('container');
@@ -16,7 +16,7 @@ export default function titleScreen(callback) {
   btn.style.fontWeight = 600;
   btn.addEventListener('click', (e) => {
     e.target.parentNode.remove();
-    callback();
+    game.puppeteer('pick-players')
   });
   container.appendChild(btn);
 
