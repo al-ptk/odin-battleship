@@ -78,7 +78,6 @@ function verValid(span) {
 
 function renderShip(span) {
   const orientation = span[0] % boardLen === span[1] % boardLen;
-
   for (let i = 0; i < span.length; i++) {
     const cell = document.querySelector(`#c${span[i]}`);
     cell.style.position = 'relative';
