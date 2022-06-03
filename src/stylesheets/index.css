@@ -138,3 +138,7 @@ button.fancy {
   height: 30px;
   background-color: white;
 }
+
+.active-ship {
+  border: 3px solid rgb(212, 24, 24);
+}

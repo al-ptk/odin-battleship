@@ -5,6 +5,7 @@ import { shipIcon } from './renderState';
 
 const boardLen = 10;
 const shipBucket = {};
+const pickerSize = { size: 0 };
 
 export default function setupBoard() {
   const container = document.createElement('div');
@@ -17,7 +18,8 @@ export default function setupBoard() {
   for (const node of board.childNodes) {
     node.addEventListener('click', (e) => {
       const idx = parseInt(e.target.id.slice(1));
-      const size = 3;
+      if (!pickerSize.size) return;
+      const size = pickerSize.size;
       const orientation = toggle.value === 'false' ? false : true;
       const span = range(idx, size, orientation * boardLen);
       const valid = orientation ? verValid(span) : horValid(span);
@@ -43,9 +45,19 @@ export default function setupBoard() {
   pickerContainer.appendChild(toggle);
   pickerContainer.classList.add('picker-container');
   for (let i = 5; i > 1; i--) {
-    pickerContainer.appendChild(mockShip(i));
+    const ms = mockShip(i);
+    ms.addEventListener('click', (e) => {
+      const selected = document.querySelector('.active-ship');
+      if (selected) {
+        selected.classList.remove('active-ship');
+      }
+      e.target.parentNode.classList.add('active-ship');
+      pickerSize.size = i;
+      console.log(pickerSize.size);
+    });
+    pickerContainer.appendChild(ms);
   }
-  container.appendChild(pickerContainer);  
+  container.appendChild(pickerContainer);
 
   return container;
 }
