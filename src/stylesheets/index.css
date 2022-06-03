@@ -98,6 +98,7 @@ button.fancy {
   overflow-x: scroll;
   overflow-y: hidden;
   gap: 60px;
+  transition: 2s all ease-in-out;
 }
 
 .toggle-orientation {

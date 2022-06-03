@@ -1,4 +1,4 @@
-export default function boardRenderer(args) {
+export default function boardRenderer(game) {
   const container = document.createElement('div');
   container.classList.add('board');
 

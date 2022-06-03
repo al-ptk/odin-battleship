@@ -1,5 +1,5 @@
 import style from './stylesheets/index.css';
-import nextPlayer from './ui-modules/nextPlayer'
+import nextPlayer from './ui-modules/nextPlayer';
 import pickPlayersScreen from './ui-modules/pickPlayers';
 import titleScreen from './ui-modules/titleScreen';
 import setupPrompt from './ui-modules/setupPrompt';
@@ -14,6 +14,10 @@ const game = (function () {
   const players = [playerFactory(10), playerFactory(10)];
   let currentPlayer = false; // There will only be 2 players, so bool works fine
   let player2ai = false;
+
+  for (const p of players) {
+    p.setRandomBoard();
+  }
 
   function resetGame() {
     players.splice(0, players.length);
@@ -71,10 +75,18 @@ const game = (function () {
   }
 
   function deployAllShips(shipsToBeDeployed) {
-    let weirdIndexFix = currentPlayer + 1 - 1
+    let weirdIndexFix = currentPlayer + 1 - 1;
     for (const ship of shipsToBeDeployed) {
       players[weirdIndexFix].deployShip(...ship);
     }
+  }
+
+  function getPlayerShips() {
+    return players[currentPlayer + 1 - 1].peekAtShips();
+  }
+
+  function getPlayerMarks() {
+    return players[currentPlayer + 1 - 1].getMarkedCells();
   }
 
   return {
@@ -83,8 +95,10 @@ const game = (function () {
     setAiPlayer,
     puppeteer,
     getCurrentPlayer,
-    deployAllShips
+    deployAllShips,
+    getPlayerMarks,
+    getPlayerShips,
   };
 })();
 
-game.puppeteer('setup-board');
+game.puppeteer('game-view');

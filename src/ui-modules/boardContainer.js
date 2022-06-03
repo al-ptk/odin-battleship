@@ -1,8 +1,9 @@
 import fancyButton from './fancyButton';
 import gameOverModal from './gameOverModal';
 import boardRenderer from './boardRenderer';
+import { renderShips } from './renderState';
 
-export default function boardContainer(puppeteer, owner, args) {
+export default function boardContainer(owner, game) {
   const container = document.createElement('div');
   container.id = 'game-screen';
   container.classList.add('container');
@@ -12,18 +13,20 @@ export default function boardContainer(puppeteer, owner, args) {
     flex: '0 0 auto',
   });
 
-  // The default view is of the opponents's board,
-  // and you must navigate to your own later
-  // Even though, after setting up board,
-  // the view will scroll from the player's board to the enemy's
-  const ownership = owner ? 'to my board. »' : "« to enemy's board.";
-
   const btn = fancyButton();
   btn.style.height = '52px';
+  const ownership = owner ? 'to my board. »' : "« to enemy's board.";
   btn.textContent = ownership;
+  btn.addEventListener('click', (e) => {
+    container.parentNode.style.transform = "translateX(300px)";
+  });
   container.appendChild(btn);
 
-  const board = boardRenderer(args);
+
+
+  const board = boardRenderer(game);
+  board.classList.add(owner ? 'owner' : 'enemy')
+  renderShips(board, game.getPlayerShips());
   container.appendChild(board);
 
   return container;

@@ -26,7 +26,7 @@ export function shipIcon(tip, end, orientation) {
   img.style.height = '105%';
   return img;
 }
-export function renderShots(player) {
+export function renderShots(board, playerMarks) {
   for (const shot of player.getMarkedCells()) {
     const cell = document.querySelector(`.board #c${shot}`);
     const img = flameIcon();
@@ -35,12 +35,12 @@ export function renderShots(player) {
     cell.appendChild(img);
   }
 }
-export function renderShips(player) {
-  for (const ship of player.peekAtShips()) {
+export function renderShips(board, playerShips) {
+  for (const ship of playerShips) {
     const orientation = ship.getOrientation();
     const boundaries = ship.getBoundaries();
     for (let i = 0; i < boundaries.length; i++) {
-      const cell = document.querySelector(`#c${boundaries[i]}`);
+      const cell = board.children[boundaries[i]];
       cell.style.position = 'relative';
       const startTip = i === 0;
       const endTip = i === boundaries.length - 1;
