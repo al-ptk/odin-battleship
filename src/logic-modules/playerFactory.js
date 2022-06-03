@@ -25,7 +25,7 @@ export default function playerFactory(boardLen) {
   }
 
   function getMarkedCells() {
-    return _board.getMarkedCells;
+    return _board.getMarkedCells();
   }
 
   function setRandomBoard() {

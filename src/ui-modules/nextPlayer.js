@@ -2,7 +2,7 @@ import fancyButton from "./fancyButton";
 
 const root = document.querySelector('#app');
 
-export default function nextPlayer() {
+export default function nextPlayer(callback) {
   const container = document.createElement('div');
   container.id = "next-player";
   container.classList.add('container');
@@ -17,6 +17,7 @@ export default function nextPlayer() {
   btn.style.fontWeight = 600;
   btn.addEventListener('click', e => {
     e.target.parentNode.remove();
+    callback();
   })
   container.appendChild(btn)
   

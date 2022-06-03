@@ -1,6 +1,6 @@
 import fancyButton from './fancyButton';
 
-export default function setupPrompt() {
+export default function setupPrompt(callback) {
   const container = document.createElement('div');
   container.id = 'setup-prompt';
   container.classList.add('container');
@@ -12,6 +12,7 @@ export default function setupPrompt() {
   btn.style.padding = '20px';
   btn.addEventListener('click', (e) => {
     e.target.parentNode.remove();
+    callback()
   });
   container.appendChild(btn);
 

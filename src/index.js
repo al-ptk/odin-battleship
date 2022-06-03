@@ -6,10 +6,31 @@ import setupPrompt from './ui-modules/setupPrompt';
 import gameView from './ui-modules/gameView';
 import setupBoard from './ui-modules/setupBoard';
 import playerFactory from './logic-modules/playerFactory';
+import { renderShots, renderShips } from './ui-modules/renderState';
 
 const root = document.querySelector('#app');
 
-puppeteer('game-view');
+const game = (function () {
+  const boardLen = 10;
+  const players = [playerFactory(10), playerFactory(10)];
+  let currentPlayer = false; // There will only be 2 players, so bool works fine
+  let player2ai = false;
+
+  function resetGame() {
+    players.splice(0, players.length);
+    a.push(playerFactory(10), playerFactory(10));
+    currentPlayer = false;
+  }
+
+  function registerAttack(idx) {
+    players[currentPlayer].receiveAttack(idx);
+    if (players[currentPlayer].allShipsSunk()) {
+      console.log('game over');
+    }
+  }
+
+  return {};
+})();
 
 function puppeteer(screen, args) {
   switch (screen) {
@@ -21,12 +42,12 @@ function puppeteer(screen, args) {
       root.appendChild(pickPlayersScreen(puppeteer));
       break;
 
-    case 'next-player':
-      root.appendChild(nextPlayer(puppeteer));
+    case 'game-view':
+      root.appendChild(gameView(puppeteer, args));
       break;
 
-    case 'game-view':
-      root.appendChild(gameView(puppeteer, true));
+    case 'next-player':
+      root.appendChild(nextPlayer(puppeteer));
       break;
 
     case 'setup-prompt':
@@ -39,20 +60,4 @@ function puppeteer(screen, args) {
   }
 }
 
-const p1 = playerFactory(10);
-p1.setRandomBoard();
-for (const ship of p1.peekAtShips()) {
-  const orientation = ship.getOrientation();
-  const boundaries = ship.getBoundaries();
-  for (let i = 0; i < boundaries.length; i++) {
-    const cell = document.querySelector(`#c${boundaries[i]}`);
-    cell.style.backgroundColor = 'blue';
-    if (i === 0) cell.style.backgroundColor = 'yellow';
-    if (i === boundaries.length - 1) {
-      cell.style.backgroundColor = 'green';
-      cell.textContent = "lll";
-      cell.style.fontSize = '24px';
-    }
-    cell.addEventListener('click', (e) => console.log(ship.getBoundaries()));
-  }
-}
+puppeteer('setup-board', ()=>{});

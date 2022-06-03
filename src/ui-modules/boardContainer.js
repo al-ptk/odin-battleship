@@ -2,7 +2,7 @@ import fancyButton from './fancyButton';
 import gameOverModal from './gameOverModal';
 import boardRenderer from './boardRenderer';
 
-export default function boardContainer(puppeteer, owner) {
+export default function boardContainer(puppeteer, owner, args) {
   const container = document.createElement('div');
   container.id = 'game-screen';
   container.classList.add('container');
@@ -23,7 +23,7 @@ export default function boardContainer(puppeteer, owner) {
   btn.textContent = ownership;
   container.appendChild(btn);
 
-  const board = boardRenderer();
+  const board = boardRenderer(args);
   container.appendChild(board);
 
   return container;
