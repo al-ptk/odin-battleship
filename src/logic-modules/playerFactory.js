@@ -32,7 +32,7 @@ export default function playerFactory(boardLen) {
   }
 
   function setRandomBoard() {
-    for (let i = 2; i < 3; i++) {
+    for (let i = 2; i < 6; i++) {
       placeRandomShip(i)
     }
   }

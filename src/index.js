@@ -15,9 +15,9 @@ const game = (function () {
   let currentPlayer = false; // There will only be 2 players, so bool works fine
   let player2ai = false;
 
-  players[0].setRandomBoard();
+  // players[0].setRandomBoard();
   // players[1].setRandomBoard();
-  setAiPlayer();
+  // setAiPlayer();
 
   function resetGame() {
     players.splice(0, players.length);
@@ -127,7 +127,7 @@ const game = (function () {
   };
 })();
 
-game.puppeteer('game-view');
+game.puppeteer('title-screen');
 
 /**
  * for every ship
