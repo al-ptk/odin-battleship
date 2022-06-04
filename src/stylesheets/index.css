@@ -89,16 +89,16 @@ button.fancy {
   align-items: center;
   padding-top: 35vh;
   background-color: rgba(68, 68, 68, 0.185);
+  z-index: 20;
 }
 
 #game-view {
   width: 100%;
   height: 100%;
   display: flex;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  flex-direction: column;
   gap: 60px;
-  transition: 2s all ease-in-out;
+  padding: 12.5%;
 }
 
 .toggle-orientation {
@@ -152,4 +152,9 @@ button.fancy {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.board {
+  width: 300px;
+  height: 300px;
 }

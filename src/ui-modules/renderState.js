@@ -29,17 +29,35 @@ export function shipIcon(tip, end, orientation) {
 export function renderShots(board, playerMarks) {
   for (const shot of playerMarks) {
     const cell = board.children[shot];
+    if (cell === undefined) {
+      console.log(playerMarks);
+      throw new Error('wut?');
+    }
     const img = flameIcon();
     img.style.position = 'absolute';
     img.style.zIndex = '10';
     cell.appendChild(img);
   }
 }
-export function renderShips(board, playerShips) {
+export function renderShips(board, playerShips, hitFlag = false) {
   for (const ship of playerShips) {
     const orientation = ship.getOrientation();
     const boundaries = ship.getBoundaries();
     for (let i = 0; i < boundaries.length; i++) {
+      if (hitFlag) {
+        let shipPart = ship.getSegments()[boundaries[i]];
+        if (shipPart === 'hit') {
+          const cell = board.children[boundaries[i]];
+          cell.style.position = 'relative';
+          const startTip = i === 0;
+          const endTip = i === boundaries.length - 1;
+          const img = shipIcon(startTip | endTip, endTip, orientation);
+          img.style.position = 'absolute';
+          img.style.zIndex = '5';
+          cell.appendChild(img);
+        }
+        continue;
+      }
       const cell = board.children[boundaries[i]];
       cell.style.position = 'relative';
       const startTip = i === 0;

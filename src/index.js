@@ -15,6 +15,10 @@ const game = (function () {
   let currentPlayer = false; // There will only be 2 players, so bool works fine
   let player2ai = false;
 
+  players[0].setRandomBoard();
+  players[1].setRandomBoard();
+  // setAiPlayer();
+
   function resetGame() {
     players.splice(0, players.length);
     a.push(playerFactory(10), playerFactory(10));
@@ -97,6 +101,17 @@ const game = (function () {
     };
   }
 
+  function registerAImove() {
+    const getRandomIdx = () => Math.trunc(Math.random() * 100);
+    if (isAiPlaying()) {
+      let move = getRandomIdx();
+      while (players[0].peekAtShipIndexes().includes(move)) {
+        move = getRandomIdx();
+      }
+      players[0].receiveAttack(move);
+    }
+  }
+
   return {
     resetGame,
     registerAttack,
@@ -108,7 +123,13 @@ const game = (function () {
     getEnemyData,
     cyclePlayer,
     isAiPlaying,
+    registerAImove,
   };
 })();
 
-game.puppeteer('title-screen');
+game.puppeteer('game-view');
+
+/**
+ * for every ship
+ *  console.log(ship.getSegments())
+ */

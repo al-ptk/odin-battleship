@@ -7,7 +7,7 @@ import fancyButton from './fancyButton';
 const boardLen = 10;
 let shipBucket = {};
 let shipsToBeshipped = [];
-let pickerSize = { size: 0, 2: 2, 3: 2, 4: 2, 5: 2 };
+let pickerSize = { size: 0, 2: 1, 3: 1, 4: 1, 5: 1 };
 
 export default function setupBoard(game) {
   const container = document.createElement('div');
@@ -27,6 +27,7 @@ export default function setupBoard(game) {
     if (game.isAiPlaying()) {
       game.deployAllShips(shipsToBeshipped);
       game.puppeteer('next-player');
+      return
     }
     if (!game.getCurrentPlayer()) {
       // if player 1
@@ -41,7 +42,7 @@ export default function setupBoard(game) {
     }
     shipBucket = {};
     shipsToBeshipped = [];
-    pickerSize = { size: 0, 2: 2, 3: 2, 4: 2, 5: 2 };
+    pickerSize = { size: 0, 2: 1, 3: 1, 4: 1, 5: 1 };
   });
   container.appendChild(done);
 

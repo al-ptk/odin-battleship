@@ -26,7 +26,7 @@ export default function shipFactory(
   function hit(index) {
     const gotten = Object.keys(_segments).includes(index.toString());
     if (!gotten) return false;
-    _segments[index.toString()] = 'hit';
+    _segments[index] = 'hit';
     return 'hit';
   }
 
@@ -41,10 +41,15 @@ export default function shipFactory(
     return orientation;
   }
 
+  function getSegments() {
+    return _segments;
+  }
+
   return {
     getBoundaries,
     hit,
     isSunk,
     getOrientation,
+    getSegments,
   };
 }
