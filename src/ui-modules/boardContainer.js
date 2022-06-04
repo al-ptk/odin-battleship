@@ -36,6 +36,6 @@ export default function boardContainer(owner, game) {
     renderShips(board, game.getCurrentData().ships);
   }
   container.appendChild(board);
-
+ 
   return container;
 }

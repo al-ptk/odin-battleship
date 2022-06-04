@@ -16,8 +16,8 @@ const game = (function () {
   let player2ai = false;
 
   players[0].setRandomBoard();
-  players[1].setRandomBoard();
-  // setAiPlayer();
+  // players[1].setRandomBoard();
+  setAiPlayer();
 
   function resetGame() {
     players.splice(0, players.length);

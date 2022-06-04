@@ -47,25 +47,22 @@ export function renderShips(board, playerShips, hitFlag = false) {
       if (hitFlag) {
         let shipPart = ship.getSegments()[boundaries[i]];
         if (shipPart === 'hit') {
-          const cell = board.children[boundaries[i]];
-          cell.style.position = 'relative';
-          const startTip = i === 0;
-          const endTip = i === boundaries.length - 1;
-          const img = shipIcon(startTip | endTip, endTip, orientation);
-          img.style.position = 'absolute';
-          img.style.zIndex = '5';
-          cell.appendChild(img);
+          shipPartImg(board, boundaries, i, orientation);
         }
         continue;
       }
-      const cell = board.children[boundaries[i]];
-      cell.style.position = 'relative';
-      const startTip = i === 0;
-      const endTip = i === boundaries.length - 1;
-      const img = shipIcon(startTip | endTip, endTip, orientation);
-      img.style.position = 'absolute';
-      img.style.zIndex = '5';
-      cell.appendChild(img);
+      shipPartImg(board, boundaries, i, orientation);
     }
   }
+}
+
+function shipPartImg(board, boundaries, i, orientation) {
+  const cell = board.children[boundaries[i]];
+  cell.style.position = 'relative';
+  const startTip = i === 0;
+  const endTip = i === boundaries.length - 1;
+  const img = shipIcon(startTip | endTip, endTip, orientation);
+  img.style.position = 'absolute';
+  img.style.zIndex = '5';
+  cell.appendChild(img);
 }

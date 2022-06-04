@@ -1,4 +1,4 @@
-import fancyButton from "./fancyButton";
+import fancyButton from './fancyButton';
 
 export default function gameOverModal(game) {
   const stopper = document.createElement('div');
@@ -8,11 +8,12 @@ export default function gameOverModal(game) {
   stopper.classList.add('stopper');
 
   const btn = fancyButton();
-  btn.textContent = 'game over.'
-  btn.addEventListener('click', e => {
+  btn.textContent = `game over. player ${game.getCurrentPlayer() + 1} wins`;
+  btn.addEventListener('click', (e) => {
     stopper.parentNode.remove();
-    setTimeout (() =>  game.puppeteer('title-screen'), 225);
-  })
+    setTimeout(() => game.puppeteer('title-screen'), 225);
+  });
+  btn.style.padding = '15px';
   stopper.appendChild(btn);
 
   return stopper;
