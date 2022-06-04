@@ -4,6 +4,7 @@ import shipFactory from './shipFactory.js';
 export default function gameBoardFactory(widthLen) {
   const _markedCells = [];
   const _allShips = [];
+  const _sunkShips = [];
   const _shipIndexes = {};
 
   function getMarkedCells() {
@@ -14,7 +15,12 @@ export default function gameBoardFactory(widthLen) {
     index = index.toString();
     _markedCells.push(index);
     const shipExists = Object.keys(_shipIndexes).includes(index);
-    return shipExists ? _shipIndexes[index].hit(index) : false;
+    const isHit = shipExists ? _shipIndexes[index].hit(index) : false;
+    if (shipExists && _shipIndexes[index].isSunk()) {
+      _sunkShips.push(_shipIndexes[index]);
+      return 'sunk';
+    }
+    return isHit;
   }
 
   function _horizontalValid(range) {
@@ -68,30 +74,34 @@ export default function gameBoardFactory(widthLen) {
   function allShipsSunk() {
     return _allShips.reduce((curr, next) => next.isSunk() && curr, true);
   }
-  
+
   function placeRandomShip(size, boardCellNumber = 100) {
     let origin,
-    orientation = true,
-    shipSpan,
-    valid = false;
+      orientation = true,
+      shipSpan,
+      valid = false;
     do {
       orientation = Math.random() >= 0.5;
       origin = Math.trunc(Math.random() * boardCellNumber);
       shipSpan = range(origin, size, orientation * widthLen);
       valid = orientation
-      ? _verticalValid(shipSpan)
-      : _horizontalValid(shipSpan);
+        ? _verticalValid(shipSpan)
+        : _horizontalValid(shipSpan);
     } while (!valid || _spotTaken(shipSpan));
     _appendShip(origin, orientation, size);
     return `empty spot at ${shipSpan}`;
   }
-  
+
   function peekAtShips() {
     return _allShips;
   }
 
   function getShipIndexes() {
     return Object.keys(_shipIndexes);
+  }
+
+  function getSunkShips() {
+    return _sunkShips;
   }
 
   return {
@@ -102,5 +112,6 @@ export default function gameBoardFactory(widthLen) {
     placeRandomShip,
     peekAtShips,
     getShipIndexes,
+    getSunkShips
   };
 }

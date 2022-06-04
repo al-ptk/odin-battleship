@@ -13,6 +13,9 @@ export default function playerFactory(boardLen) {
 
   function receiveAttack(index) {
     const truthy = _board.receiveAttack(index);
+    if (truthy === 'sunk') {
+      return true;
+    }
     return truthy ? 'hit' : 'miss';
   }
 
@@ -43,6 +46,10 @@ export default function playerFactory(boardLen) {
     return _board.getShipIndexes();
   }
 
+  function getSunkShips() {
+    return _board.getSunkShips();
+  }
+
   return {
     deployShip,
     receiveAttack,
@@ -51,6 +58,7 @@ export default function playerFactory(boardLen) {
     getMarkedCells,
     setRandomBoard,
     peekAtShips,
-    peekAtShipIndexes
+    peekAtShipIndexes,
+    getSunkShips
   };
 }

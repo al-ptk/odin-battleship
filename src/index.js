@@ -15,9 +15,7 @@ const game = (function () {
   let currentPlayer = false; // There will only be 2 players, so bool works fine
   let player2ai = false;
 
-  for (const p of players) {
-    p.setRandomBoard();
-  }
+  players[1].deployShip(0, false, 1);
 
   function resetGame() {
     players.splice(0, players.length);
@@ -27,14 +25,19 @@ const game = (function () {
 
   function registerAttack(idx) {
     players[!currentPlayer * 1].receiveAttack(idx);
-    if (players[!currentPlayer * 1].allShipsSunk()) {
-      console.log('game over');
-    }
+    const wincon =
+      players[!currentPlayer * 1].getSunkShips().length ===
+      players[!currentPlayer * 1].peekAtShips().length;
+    return wincon;
   }
 
   function setAiPlayer() {
     player2ai = true;
     players[1].setRandomBoard();
+  }
+
+  function isAiPlaying() {
+    
   }
 
   function puppeteer(screen) {
@@ -84,6 +87,7 @@ const game = (function () {
     return {
       ships: players[currentPlayer + 1 - 1].peekAtShips(),
       marks: players[currentPlayer + 1 - 1].getMarkedCells(),
+      sunk: players[currentPlayer + 1 - 1].getSunkShips(),
     };
   }
 
@@ -91,6 +95,7 @@ const game = (function () {
     return {
       ships: players[!currentPlayer + 1 - 1].peekAtShips(),
       marks: players[!currentPlayer + 1 - 1].getMarkedCells(),
+      sunk: players[!currentPlayer + 1 - 1].getSunkShips(),
     };
   }
 
@@ -103,8 +108,8 @@ const game = (function () {
     deployAllShips,
     getCurrentData,
     getEnemyData,
-    cyclePlayer
+    cyclePlayer,
   };
 })();
 
-game.puppeteer('game-view');
+game.puppeteer('next-player');

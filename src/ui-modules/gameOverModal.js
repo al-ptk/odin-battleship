@@ -1,6 +1,6 @@
 import fancyButton from "./fancyButton";
 
-export default function gameOverModal(puppeteer) {
+export default function gameOverModal(game) {
   const stopper = document.createElement('div');
   stopper.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -11,7 +11,7 @@ export default function gameOverModal(puppeteer) {
   btn.textContent = 'game over.'
   btn.addEventListener('click', e => {
     stopper.parentNode.remove();
-    setTimeout (() =>  puppeteer('title-screen'), 225);
+    setTimeout (() =>  game.puppeteer('title-screen'), 225);
   })
   stopper.appendChild(btn);
 
