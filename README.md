@@ -1,6 +1,6 @@
 # odin-battleship
 
-[\*\*>>> See it live. <<<<](https://al-ptk.github.io/odin-battleship/)
+[**>>> See it live. <<<**](https://al-ptk.github.io/odin-battleship/)
 
 ## Things I learned:
 
