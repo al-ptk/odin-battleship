@@ -15,8 +15,6 @@ const game = (function () {
   let currentPlayer = false; // There will only be 2 players, so bool works fine
   let player2ai = false;
 
-  players[1].deployShip(0, false, 1);
-
   function resetGame() {
     players.splice(0, players.length);
     a.push(playerFactory(10), playerFactory(10));
@@ -37,7 +35,7 @@ const game = (function () {
   }
 
   function isAiPlaying() {
-    
+    return player2ai;
   }
 
   function puppeteer(screen) {
@@ -109,7 +107,8 @@ const game = (function () {
     getCurrentData,
     getEnemyData,
     cyclePlayer,
+    isAiPlaying,
   };
 })();
 
-game.puppeteer('next-player');
+game.puppeteer('title-screen');

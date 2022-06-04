@@ -5,9 +5,9 @@ import { shipIcon } from './renderState';
 import fancyButton from './fancyButton';
 
 const boardLen = 10;
-const shipBucket = {};
-const shipsToBeshipped = [];
-const pickerSize = { size: 0, 2: 2, 3: 2, 4: 2, 5: 2 };
+let shipBucket = {};
+let shipsToBeshipped = [];
+let pickerSize = { size: 0, 2: 2, 3: 2, 4: 2, 5: 2 };
 
 export default function setupBoard(game) {
   const container = document.createElement('div');
@@ -24,8 +24,24 @@ export default function setupBoard(game) {
   done.addEventListener('click', (e) => {
     if (!allShipsDeployed()) return;
     e.target.parentNode.remove();
-    game.deployAllShips(shipsToBeshipped);
-    game.puppeteer('next-player');
+    if (game.isAiPlaying()) {
+      game.deployAllShips(shipsToBeshipped);
+      game.puppeteer('next-player');
+    }
+    if (!game.getCurrentPlayer()) {
+      // if player 1
+      game.deployAllShips(shipsToBeshipped);
+      game.cyclePlayer();
+      game.puppeteer('setup-prompt');
+    } else {
+      // if player 2
+      game.deployAllShips(shipsToBeshipped);
+      game.cyclePlayer();
+      game.puppeteer('next-player');
+    }
+    shipBucket = {};
+    shipsToBeshipped = [];
+    pickerSize = { size: 0, 2: 2, 3: 2, 4: 2, 5: 2 };
   });
   container.appendChild(done);
 
@@ -53,7 +69,7 @@ export default function setupBoard(game) {
       shipsToBeshipped.push([idx, orientation, size]);
       renderShip(span);
       if (allShipsDeployed()) {
-        document.querySelector('#done-button').textContent = 'done?.'
+        document.querySelector('#done-button').textContent = 'done?.';
       }
     });
   }
